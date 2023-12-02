@@ -36,8 +36,14 @@ export function AuthenticationForm(props: PaperProps) {
   });
 
   return (
-    <Paper radius="md" p="xl" withBorder {...props}>
-      <Text size="lg" fw={500}>
+    <Paper
+      radius="md"
+      p="xl"
+      withBorder
+      {...props}
+      style={{ background: "#f0f0f0" }}
+    >
+      <Text size="xl" fw={500}>
         Welcome to Mantine, {type} with
       </Text>
 
@@ -65,7 +71,7 @@ export function AuthenticationForm(props: PaperProps) {
           <TextInput
             required
             label="Email"
-            placeholder="hello@mantine.dev"
+            placeholder="Your Email address"
             value={form.values.email}
             onChange={(event) =>
               form.setFieldValue("email", event.currentTarget.value)
@@ -106,13 +112,13 @@ export function AuthenticationForm(props: PaperProps) {
             type="button"
             c="dimmed"
             onClick={() => toggle()}
-            size="xs"
+            size="sm"
           >
             {type === "register"
               ? "Already have an account? Login"
               : "Don't have an account? Register"}
           </Anchor>
-          <Button type="submit" radius="xl">
+          <Button type="submit" radius="sm">
             {upperFirst(type)}
           </Button>
         </Group>
