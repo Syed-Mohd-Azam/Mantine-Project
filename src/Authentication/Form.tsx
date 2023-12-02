@@ -41,10 +41,10 @@ export function AuthenticationForm(props: PaperProps) {
         Welcome to Mantine, {type} with
       </Text>
 
-      <Group grow mb="md" mt="md">
+      {/* <Group grow mb="md" mt="md">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
-      </Group>
+      </Group> */}
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
