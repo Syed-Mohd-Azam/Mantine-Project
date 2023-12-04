@@ -39,6 +39,7 @@ export function SignUpForm(props: PaperProps) {
         // Signed in
         const user = userCredential.user;
         console.log(user);
+        form.reset();
         navigate("/login");
         // ...
       })
@@ -72,7 +73,7 @@ export function SignUpForm(props: PaperProps) {
           <TextInput
             label="Name"
             placeholder="Your name"
-            value={form.values.name}
+            {...form.getInputProps("name")}
             onChange={(event) =>
               form.setFieldValue("name", event.currentTarget.value)
             }
@@ -83,7 +84,7 @@ export function SignUpForm(props: PaperProps) {
             required
             label="Email"
             placeholder="Your Email address"
-            value={form.values.email}
+            {...form.getInputProps("email")}
             onChange={(event) =>
               form.setFieldValue("email", event.currentTarget.value)
             }
@@ -94,7 +95,7 @@ export function SignUpForm(props: PaperProps) {
             required
             label="Password"
             placeholder="Your password"
-            value={form.values.password}
+            {...form.getInputProps("password")}
             onChange={(event) =>
               form.setFieldValue("password", event.currentTarget.value)
             }
@@ -107,7 +108,7 @@ export function SignUpForm(props: PaperProps) {
 
           <Checkbox
             label="I accept terms and conditions"
-            checked={form.values.terms}
+            {...form.getInputProps("termsOfService", { type: "checkbox" })}
             onChange={(event) =>
               form.setFieldValue("terms", event.currentTarget.checked)
             }

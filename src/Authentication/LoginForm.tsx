@@ -22,6 +22,7 @@ export function LoginForm(props: PaperProps) {
         const user = userCredential.user;
         navigate("/home");
         console.log(user);
+        form.reset();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -69,7 +70,7 @@ export function LoginForm(props: PaperProps) {
             required
             label="Email"
             placeholder="Your Email address"
-            value={form.values.email}
+            {...form.getInputProps("email")}
             onChange={(event) =>
               form.setFieldValue("email", event.currentTarget.value)
             }
@@ -81,7 +82,7 @@ export function LoginForm(props: PaperProps) {
             required
             label="Password"
             placeholder="Your password"
-            value={form.values.password}
+            {...form.getInputProps("password")}
             onChange={(event) =>
               form.setFieldValue("password", event.currentTarget.value)
             }
