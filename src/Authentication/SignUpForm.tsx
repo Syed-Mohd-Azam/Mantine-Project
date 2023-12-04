@@ -50,6 +50,7 @@ export function SignUpForm(props: PaperProps) {
         // ..
       });
   };
+  console.log(form);
   return (
     <Paper
       radius="md"
@@ -74,9 +75,6 @@ export function SignUpForm(props: PaperProps) {
             label="Name"
             placeholder="Your name"
             {...form.getInputProps("name")}
-            onChange={(event) =>
-              form.setFieldValue("name", event.currentTarget.value)
-            }
             radius="md"
           />
 
@@ -85,10 +83,6 @@ export function SignUpForm(props: PaperProps) {
             label="Email"
             placeholder="Your Email address"
             {...form.getInputProps("email")}
-            onChange={(event) =>
-              form.setFieldValue("email", event.currentTarget.value)
-            }
-            error={form.errors.email && "Invalid email"}
             radius="md"
           />
           <PasswordInput
@@ -96,22 +90,12 @@ export function SignUpForm(props: PaperProps) {
             label="Password"
             placeholder="Your password"
             {...form.getInputProps("password")}
-            onChange={(event) =>
-              form.setFieldValue("password", event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
             radius="md"
           />
 
           <Checkbox
             label="I accept terms and conditions"
             {...form.getInputProps("termsOfService", { type: "checkbox" })}
-            onChange={(event) =>
-              form.setFieldValue("terms", event.currentTarget.checked)
-            }
           />
         </Stack>
 

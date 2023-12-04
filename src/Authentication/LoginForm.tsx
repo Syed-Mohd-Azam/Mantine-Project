@@ -71,10 +71,6 @@ export function LoginForm(props: PaperProps) {
             label="Email"
             placeholder="Your Email address"
             {...form.getInputProps("email")}
-            onChange={(event) =>
-              form.setFieldValue("email", event.currentTarget.value)
-            }
-            error={form.errors.email && "Invalid email"}
             radius="md"
           />
 
@@ -83,13 +79,6 @@ export function LoginForm(props: PaperProps) {
             label="Password"
             placeholder="Your password"
             {...form.getInputProps("password")}
-            onChange={(event) =>
-              form.setFieldValue("password", event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
             radius="md"
           />
         </Stack>
