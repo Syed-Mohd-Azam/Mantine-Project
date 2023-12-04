@@ -1,5 +1,7 @@
-import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { NavLink, useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import {
   TextInput,
   PasswordInput,
@@ -9,15 +11,24 @@ import {
   PaperProps,
   Button,
   Divider,
-  Checkbox,
-  Anchor,
   Stack,
 } from "@mantine/core";
-// import { GoogleButton } from "./GoogleButton";
-// import { TwitterButton } from "./TwitterButton";
-
-export function AuthenticationForm(props: PaperProps) {
-  const [type, toggle] = useToggle(["login", "register"]);
+export function LoginForm(props: PaperProps) {
+  const navigate = useNavigate();
+  const onLogin = (values: any) => {
+    signInWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigate("/home");
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
   const form = useForm({
     initialValues: {
       email: "",
@@ -34,7 +45,6 @@ export function AuthenticationForm(props: PaperProps) {
           : null,
     },
   });
-
   return (
     <Paper
       radius="md"
@@ -44,30 +54,17 @@ export function AuthenticationForm(props: PaperProps) {
       style={{ background: "#f0f0f0" }}
     >
       <Text size="xl" fw={500}>
-        Welcome to Mantine, {type} with
+        Welcome to Mantine, Login with
       </Text>
-
-      {/* <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
-        <TwitterButton radius="xl">Twitter</TwitterButton>
-      </Group> */}
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
-      <form onSubmit={form.onSubmit(() => {})}>
+      <form
+        onSubmit={form.onSubmit((values) => {
+          onLogin(values);
+        })}
+      >
         <Stack>
-          {type === "register" && (
-            <TextInput
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
-              onChange={(event) =>
-                form.setFieldValue("name", event.currentTarget.value)
-              }
-              radius="md"
-            />
-          )}
-
           <TextInput
             required
             label="Email"
@@ -94,35 +91,18 @@ export function AuthenticationForm(props: PaperProps) {
             }
             radius="md"
           />
-
-          {type === "register" && (
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue("terms", event.currentTarget.checked)
-              }
-            />
-          )}
         </Stack>
 
         <Group justify="space-between" mt="xl">
-          <Anchor
-            component="button"
-            type="button"
-            c="dimmed"
-            onClick={() => toggle()}
-            size="sm"
-          >
-            {type === "register"
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
-          </Anchor>
+          <Text size="sm">
+            Don't have an account? <NavLink to="/signup">Register</NavLink>
+          </Text>
           <Button type="submit" radius="sm">
-            {upperFirst(type)}
+            Login
           </Button>
         </Group>
       </form>
     </Paper>
   );
 }
+export default LoginForm;

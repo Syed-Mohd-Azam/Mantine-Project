@@ -26,6 +26,7 @@
     "@tiptap/extension-link": "^2.1.13",
     "@tiptap/react": "^2.1.13",
     "@tiptap/starter-kit": "^2.1.13",
+    "@types/firebase": "^3.2.1",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^7.1.0",
     "firebase": "^10.7.0",
