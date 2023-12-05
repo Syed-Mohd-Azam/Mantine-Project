@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "@mantine/form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
@@ -14,22 +15,8 @@ import {
   Stack,
 } from "@mantine/core";
 export function LoginForm(props: PaperProps) {
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const onLogin = (values: any) => {
-    signInWithEmailAndPassword(auth, values.email, values.password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        navigate("/home");
-        console.log(user);
-        form.reset();
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-  };
   const form = useForm({
     initialValues: {
       email: "",
@@ -46,6 +33,22 @@ export function LoginForm(props: PaperProps) {
           : null,
     },
   });
+  const onLogin = (values: any) => {
+    signInWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigate("/home");
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        setError(true);
+      });
+  };
+
   return (
     <Paper
       radius="md"
@@ -59,7 +62,7 @@ export function LoginForm(props: PaperProps) {
       </Text>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
-
+      {error && <Text c="blue">Wrong Password or Email. Try Again!</Text>}
       <form
         onSubmit={form.onSubmit((values) => {
           onLogin(values);
@@ -71,10 +74,6 @@ export function LoginForm(props: PaperProps) {
             label="Email"
             placeholder="Your Email address"
             {...form.getInputProps("email")}
-            onChange={(event) =>
-              form.setFieldValue("email", event.currentTarget.value)
-            }
-            error={form.errors.email && "Invalid Email"}
             radius="md"
           />
 
@@ -83,13 +82,6 @@ export function LoginForm(props: PaperProps) {
             label="Password"
             placeholder="Your password"
             {...form.getInputProps("password")}
-            onChange={(event) =>
-              form.setFieldValue("password", event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
             radius="md"
           />
         </Stack>

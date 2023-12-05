@@ -46,6 +46,7 @@ export function SignUpForm(props: PaperProps) {
         // ...
       })
       .catch((error) => {
+        debugger;
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
@@ -77,10 +78,6 @@ export function SignUpForm(props: PaperProps) {
             label="Name"
             placeholder="Your name"
             {...form.getInputProps("name")}
-            onChange={(event) =>
-              form.setFieldValue("name", event.currentTarget.value)
-            }
-            error={form.errors.name && "Please enter correct name"}
             radius="md"
           />
 
@@ -89,10 +86,6 @@ export function SignUpForm(props: PaperProps) {
             label="Email"
             placeholder="Your Email address"
             {...form.getInputProps("email")}
-            onChange={(event) =>
-              form.setFieldValue("email", event.currentTarget.value)
-            }
-            error={form.errors.email && "Invalid email"}
             radius="md"
           />
           <PasswordInput
@@ -100,23 +93,12 @@ export function SignUpForm(props: PaperProps) {
             label="Password"
             placeholder="Your password"
             {...form.getInputProps("password")}
-            onChange={(event) =>
-              form.setFieldValue("password", event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
             radius="md"
           />
 
           <Checkbox
             label="I accept terms and conditions"
             checked={form.values.terms}
-            onChange={(event) =>
-              form.setFieldValue("terms", event.currentTarget.checked)
-            }
-            error={form.errors.terms && "Please Tick the Checkbox"}
           />
         </Stack>
 
