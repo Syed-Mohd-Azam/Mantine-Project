@@ -31,6 +31,8 @@ export function SignUpForm(props: PaperProps) {
         val.length <= 6
           ? "Password should include at least 6 characters"
           : null,
+      name: (val) => (val.length < 2 ? "Please enter correct name" : null),
+      terms: (val) => (val ? null : "Please Tick the Checkbox"),
     },
   });
   const onSubmit = async (values: any) => {
@@ -50,7 +52,7 @@ export function SignUpForm(props: PaperProps) {
         // ..
       });
   };
-  console.log(form);
+  // console.log(form);
   return (
     <Paper
       radius="md"
@@ -75,6 +77,10 @@ export function SignUpForm(props: PaperProps) {
             label="Name"
             placeholder="Your name"
             {...form.getInputProps("name")}
+            onChange={(event) =>
+              form.setFieldValue("name", event.currentTarget.value)
+            }
+            error={form.errors.name && "Please enter correct name"}
             radius="md"
           />
 
@@ -83,6 +89,10 @@ export function SignUpForm(props: PaperProps) {
             label="Email"
             placeholder="Your Email address"
             {...form.getInputProps("email")}
+            onChange={(event) =>
+              form.setFieldValue("email", event.currentTarget.value)
+            }
+            error={form.errors.email && "Invalid email"}
             radius="md"
           />
           <PasswordInput
@@ -90,12 +100,23 @@ export function SignUpForm(props: PaperProps) {
             label="Password"
             placeholder="Your password"
             {...form.getInputProps("password")}
+            onChange={(event) =>
+              form.setFieldValue("password", event.currentTarget.value)
+            }
+            error={
+              form.errors.password &&
+              "Password should include at least 6 characters"
+            }
             radius="md"
           />
 
           <Checkbox
             label="I accept terms and conditions"
-            {...form.getInputProps("termsOfService", { type: "checkbox" })}
+            checked={form.values.terms}
+            onChange={(event) =>
+              form.setFieldValue("terms", event.currentTarget.checked)
+            }
+            error={form.errors.terms && "Please Tick the Checkbox"}
           />
         </Stack>
 
